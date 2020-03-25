@@ -22,7 +22,6 @@ end
 
 require 'puppet/util/pe_conf'
 require 'puppet/util/pe_conf/recover'
-require 'puppet/util/puppetdb'
 
 Puppet.initialize_settings
 

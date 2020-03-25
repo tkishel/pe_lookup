@@ -5,7 +5,7 @@ require 'spec_helper_acceptance'
 describe 'run' do
   context 'puppet pe lookup' do
     it 'and output results' do
-      on(master, puppet('pe', 'lookup', '--param',  'puppet_enterprise::profile::console::delayed_job_workers'), acceptable_exit_codes: 0) do |result|
+      on(master, puppet('pe', 'lookup', '--param', 'puppet_enterprise::profile::console::delayed_job_workers'), acceptable_exit_codes: 0) do |result|
         expect(result.stdout).to match(%r{Parameter: puppet_enterprise::profile::console::delayed_job_workers})
       end
     end

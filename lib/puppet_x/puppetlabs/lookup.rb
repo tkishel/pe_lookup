@@ -32,34 +32,33 @@ module PuppetX
 
         current_settings['hiera'] = current_settings['hiera'].select { |k, _v| k == setting_name }
         current_settings['classifier'] = current_settings['classifier'].select { |k, _v| k == setting_name }
-        output ("Node: %{certname}") % { certname: certname }
-        output ("Parameter: %{setting_name}") % { setting_name: setting_name }
+        output 'Node: %{certname}' % { certname: certname }
+        output 'Parameter: %{setting_name}' % { setting_name: setting_name }
         output_line
 
         found_in_hiera = current_settings['hiera'].key?(setting_name)
         if found_in_hiera
-          output ('Parameter found in Hiera:')
+          output 'Parameter found in Hiera:'
           output_line
-          output_data (current_settings['hiera'].to_yaml)
+          output_data(current_settings['hiera'].to_yaml)
         else
-          output ('Parameter not found in Hiera')
+          output 'Parameter not found in Hiera'
         end
         output_line
 
         found_in_classifier = current_settings['classifier'].key?(setting_name)
         if found_in_classifier
-          output ('Parameter found in the Classifier:')
+          output 'Parameter found in the Classifier:'
           output_line
-          output_data(JSON.pretty_generate(current_settings['classifier']))
+          output_data JSON.pretty_generate(current_settings['classifier'])
         else
-          output ('Parameter not found in the Classifier')
+          output 'Parameter not found in the Classifier'
         end
         output_line
 
-        if found_in_hiera && found_in_classifier
-          output ('Classifier settings take precedence over Hiera settings.')
-          output_line
-        end
+        return unless found_in_hiera && found_in_classifier
+        output 'Classifier settings take precedence over Hiera settings.'
+        output_line
       end
 
       #
@@ -147,5 +146,4 @@ if File.expand_path(__FILE__) == File.expand_path($PROGRAM_NAME)
 else
   require 'puppet/util/pe_conf'
   require 'puppet/util/pe_conf/recover'
-  require 'puppet/util/puppetdb'
 end

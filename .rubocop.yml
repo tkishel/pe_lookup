@@ -1,5 +1,7 @@
 ---
-require: rubocop-rspec
+require:
+- rubocop-rspec
+- rubocop-i18n
 AllCops:
   DisplayCopNames: true
   TargetRubyVersion: '2.1'
@@ -19,10 +21,13 @@ AllCops:
 Metrics/LineLength:
   Description: People have wide screens, use them.
   Max: 200
-#GetText/DecorateString:
-#  Description: We don't want to decorate test output.
-#  Exclude:
-#  - spec/*
+GetText:
+  Enabled: false
+GetText/DecorateString:
+  Description: We don't want to decorate test output.
+  Exclude:
+  - spec/**/*
+  Enabled: false
 RSpec/BeforeAfterAll:
   Description: Beware of using after(:all) as it may cause state to leak between tests.
     A necessary evil in acceptance testing.
@@ -37,7 +42,7 @@ Style/BlockDelimiters:
   EnforcedStyle: braces_for_chaining
 Style/ClassAndModuleChildren:
   Description: Compact style reduces the required amount of indentation.
-  EnforcedStyle: compact
+  Enabled: false
 Style/EmptyElse:
   Description: Enforce against empty else clauses, but allow `nil` for clarity.
   EnforcedStyle: empty
@@ -84,6 +89,12 @@ Style/MethodCalledOnDoEndBlock:
   Enabled: true
 Style/StringMethods:
   Enabled: true
+GetText/DecorateFunctionMessage:
+  Enabled: false
+GetText/DecorateStringFormattingUsingInterpolation:
+  Enabled: false
+GetText/DecorateStringFormattingUsingPercent:
+  Enabled: false
 Layout/EndOfLine:
   Enabled: false
 Layout/IndentHeredoc:
@@ -120,33 +131,5 @@ Style/IfUnlessModifier:
   Enabled: false
 Style/SymbolProc:
   Enabled: false
-# TJK Overridden
-Metrics/LineLength:
-  Max: 255
-Style/ClassAndModuleChildren:
-  Enabled: false
-Style/TrailingCommaInLiteral:
-  Enabled: false
-Style/WordArray:
-  Enabled: false
-# TJK New
-Layout/AlignArray:
-  Enabled: false
-Layout/ExtraSpacing:
-  Enabled: false
-Layout/MultilineArrayBraceLayout:
-  Enabled: false
-RSpec/FilePath:
-  Enabled: false
-Style/ClassAndModuleCamelCase:
-  Enabled: false
 Style/ColonMethodCall:
-  Enabled: false
-Style/GuardClause:
-  Enabled: false
-Style/HashSyntax:
-  Enabled: false
-Style/NumericLiterals:
-  Enabled: false
-Style/StringLiterals:
   Enabled: false
