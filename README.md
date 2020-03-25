@@ -1,4 +1,4 @@
-# pe_tune
+# pe_lookup
 
 #### Table of Contents
 
@@ -36,7 +36,7 @@ String. The environment of the node to lookup. Defaults to 'production'.
 
 ## Reference
 
-This command calls code called by `puppet infrastructure recover_configuration`.
+This command uses code used by `puppet infrastructure recover_configuration`.
 
 ### Output
 
