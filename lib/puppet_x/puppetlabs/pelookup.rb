@@ -1,3 +1,5 @@
+#!/opt/puppetlabs/puppet/bin/ruby
+
 # Output a key defined in Hiera and/or the Classifier.
 
 module PuppetX
