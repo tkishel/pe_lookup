@@ -10,7 +10,7 @@
 
 ## Description
 
-This module provides a Puppet command `puppet pe lookup` that outputs a class parameter defined in Hiera and/or the Classifier.
+This module provides a Puppet command `puppet pe lookup` that outputs a key (class parameter) defined in Hiera and/or the Classifier.
 
 ## Setup
 
@@ -18,21 +18,26 @@ Install this module on the Primary Master.
 
 ## Usage
 
-Run the `puppet pe lookup --param CLASS_PARAMETER` command as root on the Primary Master.
+Run the `puppet pe lookup <KEY>` command as root on the Primary Master.
 
 #### Parameters
 
-##### `--param`
+##### `<KEY>`
 
-String. The class parameter to lookup.
+String.
+The key to lookup.
 
 ##### `--node`
 
-String. The node to lookup. Defaults to the node where the command is run.
+String.
+The node to lookup.
+Defaults to the node where the command is run.
 
 ##### `--pe_environment`
 
-String. The environment of the node to lookup. Defaults to 'production'.
+String.
+The environment of the node to lookup.
+Defaults to 'production'.
 
 ## Reference
 
@@ -41,17 +46,17 @@ This command uses code used by `puppet infrastructure recover_configuration`.
 ### Output
 
 ```shell
-[root@pe-master ~] puppet pe lookup --param puppet_enterprise::profile::console::delayed_job_workers
+[root@pe-master ~] puppet pe lookup puppet_enterprise::profile::console::delayed_job_workers
 # Node: pe-master.puppetdebug.vlan
-# Setting: puppet_enterprise::profile::console::delayed_job_workers
+# Key:  puppet_enterprise::profile::console::delayed_job_workers
 
-# Setting found in Hiera:
+# Key found in Hiera:
 
 ---
 puppet_enterprise::profile::console::delayed_job_workers: 1
 
 
-# Setting found in the Classifier:
+# Key found in the Classifier:
 
 {
   "puppet_enterprise::profile::console::delayed_job_workers": 2

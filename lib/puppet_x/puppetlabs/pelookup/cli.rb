@@ -1,3 +1,5 @@
+#!/opt/puppetlabs/puppet/bin/ruby
+
 require 'optparse'
 require 'puppet'
 require 'json'
@@ -25,25 +27,25 @@ require 'puppet/util/pe_conf/recover'
 
 Puppet.initialize_settings
 
+require_relative '../pelookup'
+
 options = {}
 parser = OptionParser.new do |opts|
-  opts.banner = 'Usage: lookup.rb --param CLASS_PARAMETER [--node CERTNAME] [--pe_environment ENVIRONMENT]'
+  opts.banner = 'Usage: pelookup.rb <KEY> [--node CERTNAME] [--pe_environment ENVIRONMENT]'
   opts.separator ''
-  opts.separator 'Summary: Output a class parameter defined in Hiera and/or the Classifier'
+  opts.separator 'Summary: Output a key defined in Hiera and/or the Classifier'
   opts.separator ''
   opts.separator 'Options:'
   opts.separator ''
 
-  opts.on('--param CLASS_PARAMETER', 'The class parameter to lookup') do |param|
-    options[:param] = param
-  end
   options[:node] = Puppet[:certname]
-  opts.on('--node CERTNAME', 'The node to lookup. Defaults to the node where the command is run.') do |node|
+  opts.on('--node CERTNAME', 'The node to lookup. Defaults to current node') do |node|
     options[:node] = node
   end
+
   options[:pe_environment] = 'production'
-  opts.on('--pe_environment ENVIRONMENT', "The environment of the node to lookup. Defaults to 'production'") do |param|
-    options[:pe_environment] = param
+  opts.on('--pe_environment ENVIRONMENT', "The environment of the node to lookup. Defaults to 'production'") do |pe_environment|
+    options[:pe_environment] = pe_environment
   end
 
   opts.on('-h', '--help') do
@@ -54,8 +56,11 @@ parser = OptionParser.new do |opts|
 end
 parser.parse!
 
+setting = ARGV.empty? ? nil : ARGV[0]
+
 Puppet::Util::Log.newdestination :console
 Puppet.debug = options[:debug]
+Puppet.debug("Command Argument: #{setting}")
 Puppet.debug("Command Options: #{options}")
-Lookup = PuppetX::Puppetlabs::Lookup.new(options)
-Lookup.output_current_setting(options[:node], options[:param])
+PELookup = PuppetX::Puppetlabs::PELookup.new(options)
+PELookup.lookup(setting)

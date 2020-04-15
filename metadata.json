@@ -1,8 +1,8 @@
 {
   "name": "tkishel-pe_lookup",
-  "version": "1.0.2",
+  "version": "1.5.0",
   "author": "Thomas Kishel",
-  "summary": "Lookup a class parameter defined in Hiera and/or the Classifier.",
+  "summary": "Lookup a key defined in Hiera and/or the Classifier.",
   "license": "Apache-2.0",
   "source": "https://github.com/tkishel/pe_lookup.git",
   "project_page": "https://github.com/tkishel/pe_lookup",

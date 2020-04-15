@@ -17,7 +17,7 @@ enterprise_module_paths.each do |enterprise_module_path|
   end
 end
 
-require_relative '../../puppet_x/puppetlabs/lookup'
+require_relative '../../puppet_x/puppetlabs/pelookup'
 
 Puppet::Face.define(:pe, '1.0.0') do
   summary _('Puppet Enterprise Support Tooling')
@@ -26,17 +26,14 @@ Puppet::Face.define(:pe, '1.0.0') do
   DESC
 
   action(:lookup) do
-    summary 'Output a class parameter defined in Hiera and/or the Classifier'
+    summary 'Output a key defined in Hiera and/or the Classifier'
+    arguments '<KEY>'
     description <<-'DESC'
-      Output a class parameter defined in Hiera and/or the Classifier.
+      Output a key defined in Hiera and/or the Classifier.
     DESC
 
-    option '--param CLASS_PARAMETER' do
-      summary 'The class parameter to lookup'
-      default_to { nil }
-    end
     option '--node CERTNAME' do
-      summary 'The node to lookup. Defaults to the node where the command is run.'
+      summary 'The node to lookup. Defaults to current node'
       default_to { Puppet[:certname] }
     end
     option '--pe_environment ENVIRONMENT' do
@@ -46,9 +43,11 @@ Puppet::Face.define(:pe, '1.0.0') do
 
     when_invoked do |*args|
       options = args.pop
+      setting = args.empty? ? nil : args[0]
+      Puppet.debug("Command Argument: #{setting}")
       Puppet.debug("Command Options: #{options}")
-      Lookup = PuppetX::Puppetlabs::Lookup.new(options)
-      Lookup.output_current_setting(options[:node], options[:param])
+      PELookup = PuppetX::Puppetlabs::PELookup.new(options)
+      PELookup.lookup(setting)
       return
     end
   end
